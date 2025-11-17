@@ -21,16 +21,13 @@ Please place the downloaded CSV files into the `data/` folder before running the
 ## Project Structure
 
 Project/
-│
-├── README.md         
-├── docker-compose.yml
-├── database/
-│     ├── schema.sql
-│     └── security.sql
-├── scripts/
-│     └── ingest_data.py
-├── data/
-│     └── README.md (Google drive link)
-└── ER_Diagram.pdf
-
-
+1. Readme.md
+2. docker-compose.yml
+3. database/
+     - schema.sql
+     - security.sql
+4. scripts/
+     - ingest_data.py
+5. data
+     - README.md (Google drive link)
+6. ER_Diagram.pdf
