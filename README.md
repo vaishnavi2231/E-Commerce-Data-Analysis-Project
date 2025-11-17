@@ -17,3 +17,20 @@ You can download the dataset from the following Google Drive link:
 https://drive.google.com/drive/folders/1KHfSVSZpr5Flyqs3hiq18OID4cTQtS8E?usp=drive_link
 
 Please place the downloaded CSV files into the `data/` folder before running the ingestion script.
+
+## Project Structure
+
+Project/
+│
+├── README.md         
+├── docker-compose.yml
+├── database/
+│     ├── schema.sql
+│     └── security.sql
+├── scripts/
+│     └── ingest_data.py
+├── data/
+│     └── README.md (Google drive link)
+└── ER_Diagram.pdf
+
+
