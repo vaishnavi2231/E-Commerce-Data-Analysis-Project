@@ -31,3 +31,4 @@ Project/
 5. data
      - README.md (Google drive link)
 6. ER_Diagram.pdf
+7. 3NF Justification Report
