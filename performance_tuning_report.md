@@ -120,7 +120,7 @@ CREATE INDEX IF NOT EXISTS idx_order_items_seller
     ON order_items(seller_id);
 ```
 
-### **4.2 Why These Indexes?**
+### **4.2 Benefits of these Indexes?**
 
 | Column                                 | Reason                                                   | Benefit                        |
 | -------------------------------------- | -------------------------------------------------------- | ------------------------------ |
@@ -156,7 +156,7 @@ Total execution time: ~361.29 ms
 | Sequential Scans | Higher     | Lower             | Improved filtering       |
 | Join Performance | Slower     | Slightly improved | Index on seller_id helps |
 
-### **Why Was Improvement Small?**
+### **Improvement was small because**
 
 1. **Dataset size is small** (course dataset, not production scale).
 2. **PostgreSQL caching** improves repeated execution time automatically.
