@@ -2,7 +2,7 @@
 
 ## 1. Star Schema Design
 
-For the optional part of Phase 2, I designed and implemented a star schema for the Olist e-commerce dataset using dbt and PostgreSQL.
+For the optional part of Phase 2, we designed and implemented a star schema for the Olist e-commerce dataset using dbt and PostgreSQL.
 
 ### Fact Table: fact_order_items
 
