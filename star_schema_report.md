@@ -58,4 +58,4 @@ To allow analysis of:
 - Purpose: time-series analysis and aggregations by day, month, and year.
 - Used in the fact table for: order_date, delivered_date, estimated_delivery_date.
 
-A star schema diagram (star_schema.drawio/PNG) is located in this repo showing that the fact_order_items is at the center of a star schema and the dimension tables of customer, seller, product, and date surrounding it.
+A star schema diagram (star_schema.drawio.PNG) is located in this repo showing that the fact_order_items is at the center of a star schema and the dimension tables of customer, seller, product, and date surrounding it.
