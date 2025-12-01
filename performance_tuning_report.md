@@ -172,9 +172,9 @@ On a larger dataset of millions of rows, this would be dramatic in terms of:
 
 # **7. Conclusion**
 
-This performance tuning exercise demonstrated:
+This performance tuning exercise highlighted:
 
-* How to analyze query bottlenecks using **EXPLAIN ANALYZE**
+* How to Analyze Query Bottlenecks using **EXPLAIN ANALYZE**
 * How to design **indexes aligned with filtering & join patterns**
 * How OLAP queries benefit from optimized OLTP schema access
 * How small improvements in test datasets translate into **big gains** at scale
@@ -183,7 +183,7 @@ Even though the runtime improvement is modest due to dataset size, the new index
 
 * Faster filtering
 * Better join selectivity
-* Scalable performance as data volume increases
+* Scalable performance with increasing volumes of data 
 
-This tuning approach ensures the analytical layer remains responsive for dashboards, aggregations, and deeper analytics.
+This approach to tuning ensures the analytical layer remains responsive for dashboards, aggregations, and deeper analytics.
 
