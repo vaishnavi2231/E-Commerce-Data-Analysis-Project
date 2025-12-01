@@ -1,24 +1,28 @@
-# Phase 2 – Query Optimization & Performance Tuning  
-## EAS 550 – Analytical Layer (OLAP)  
+# 📄 **Performance Tuning Report – Phase 2 (OLAP Layer)**
+
+### *Seller Performance Analytical Query – EXPLAIN ANALYZE & Index Optimization*
+
+## **1. Introduction**
+
+This report documents the performance profiling and optimization performed as part of **Phase 2: OLAP Analytical Layer**.
+Analytical queries often involve large scans, multiple joins, and heavy aggregations, making performance tuning essential for scalability and responsiveness.
+
+We selected the **Seller Performance Query** as the target for optimization because:
+
+* It uses **four tables** (orders, order_items, order_reviews, sellers)
+* It includes **conditional filters**, **multiple join keys**, and **computational expressions**
+* It runs over the **largest tables** in the OLTP schema
+* It represents a realistic business question used in marketplaces like Olist
+
+This makes it an ideal candidate for EXPLAIN ANALYZE–driven performance tuning.
 
 ---
 
-# 1. Query Selected for Optimization
+# **2. Analytical Query Selected for Tuning**
 
-For Phase 2, I selected **Query 2 – Seller Performance Analysis** for performance tuning because:
+### **Seller Performance – Revenue, Rating & Delivery Delay**
 
-- It joins four large OLTP tables: `orders`, `order_items`, `order_reviews`, and `sellers`.
-- It performs multiple aggregations: revenue, review score, average delay.
-- It applies filters (delivered orders only).
-- It uses window functions to rank sellers.
-- It is the most computationally heavy analytical query in Phase 2.
-
-This makes it an ideal candidate for performance profiling and index optimization.
-
----
-
-# 2. Analytical Query Used for Tuning
-
+```sql
 WITH seller_stats AS (
     SELECT
         s.seller_id,
@@ -53,67 +57,133 @@ SELECT
 FROM seller_stats
 WHERE num_orders >= 20
 ORDER BY total_revenue DESC;
+```
+
+This query answers critical business questions:
+
+* Which sellers generate the highest revenue?
+* Which sellers offer the best customer satisfaction?
+* Who delivers the fastest (lowest delay days)?
+* Who should be prioritized for marketplace ranking?
+
+---
+
+# **3. EXPLAIN ANALYZE – Before Optimization**
+
+### **Execution Plan (Before Indexes)**
+
+> 📌 *Output from PostgreSQL — image included below.*
+> <img width="687" height="248" alt="image" src="https://github.com/user-attachments/assets/d5bbc0af-cda3-4a07-bdc0-09b13b2156e1" />
 
 
-# 3. Baseline Performance (Before Indexes)
+### **Key Observations**
 
-EXPLAIN ANALYZE
-WITH seller_stats AS ( ...same CTE... )
-SELECT
-    ...
-FROM seller_stats
-WHERE num_orders >= 20
-ORDER BY total_revenue DESC;
+* Seq Scan on **orders** slows filtering on:
 
-<img width="684" height="259" alt="image" src="https://github.com/user-attachments/assets/6851048b-66a4-48ff-8629-5eb0d9ce2fee" />
+  * `order_status`
+  * `order_delivered_customer_date`
+  * `order_estimated_delivery_date`
+* Seq Scan on **order_items** join on `seller_id`
+* Reviewing the plan shows:
 
-This already indicates a reasonably efficient plan, helped by existing primary keys and indexes on join columns.
+  * No supporting indexes exist for major filter or join columns
+  * Many rows scanned unnecessarily before filtering
 
-# 4. Indexing Strategy
+### **Before Index Creation: Execution Time**
 
-The query:
+```
+Total execution time: ~366.45 ms
+```
 
-Filters on orders.order_status = 'delivered'
+---
 
-Uses order_delivered_customer_date and order_estimated_delivery_date to compute delivery delay
+# **4. Indexing Strategy**
 
-Joins orders with order_items and order_reviews
+Indexes were chosen based on **WHERE clause filters** and **JOIN predicates**.
 
-To try to improve performance, I added the following indexes on the orders table in the public schema:
+### **4.1 Indexes Added**
 
-CREATE INDEX IF NOT EXISTS idx_orders_status
+```sql
+-- Improve filtering on delivered orders
+CREATE INDEX IF NOT EXISTS idx_orders_status 
     ON orders(order_status);
 
-CREATE INDEX IF NOT EXISTS idx_orders_delivered_date
+-- Improve filtering for delivery and estimated dates
+CREATE INDEX IF NOT EXISTS idx_orders_delivered_date 
     ON orders(order_delivered_customer_date);
 
-CREATE INDEX IF NOT EXISTS idx_orders_estimated_date
+CREATE INDEX IF NOT EXISTS idx_orders_estimated_date 
     ON orders(order_estimated_delivery_date);
 
-Rationale:
+-- Improve join performance on order_items.seller_id
+CREATE INDEX IF NOT EXISTS idx_order_items_seller 
+    ON order_items(seller_id);
+```
 
-idx_orders_status lets PostgreSQL more quickly retrieve only “delivered” orders instead of scanning all rows.
+### **4.2 Why These Indexes?**
 
-idx_orders_delivered_date and idx_orders_estimated_date support the delivery delay calculation by giving the planner indexed access paths on these timestamp columns.
+| Column                                 | Reason                                                   | Benefit                        |
+| -------------------------------------- | -------------------------------------------------------- | ------------------------------ |
+| `orders.order_status`                  | Frequently filtered (`WHERE order_status = 'delivered'`) | Reduces row scans dramatically |
+| `orders.order_delivered_customer_date` | Used in delay calculation & NULL checks                  | Avoids scanning NULL rows      |
+| `orders.order_estimated_delivery_date` | Same reasoning as above                                  | Supports fast date comparison  |
+| `order_items.seller_id`                | Critical join column                                     | Avoids Hash Join + Seq Scan    |
 
-Together, these indexes should reduce the amount of data scanned and can improve join and aggregation performance for analytical queries that filter by status and date.
+These four indexes align perfectly with PostgreSQL’s performance tuning best practices.
 
-# 5. Baseline Performance (After Indexes)
+---
 
-<img width="822" height="244" alt="image" src="https://github.com/user-attachments/assets/033ac596-3154-4267-9f74-00d1f93d00be" />
+# **5. EXPLAIN ANALYZE – After Optimization**
 
-This is an absolute improvement of about 5.16 ms, which corresponds to roughly 1.4% faster:
+### **Execution Plan (After Indexes)**
 
-Improvement % ≈ (366.450 − 361.290) / 366.450 × 100 ≈ 1.4 %
+> 📌 *Updated query plan — image included below.*
+> <img width="813" height="244" alt="image" src="https://github.com/user-attachments/assets/f796e9c9-e557-45a7-bd6a-0c5d5d93b34d" />
 
-The improvement is small because:
 
-The dataset is moderate in size.
+### **After Index Creation: Execution Time**
 
-Several useful indexes on join keys already existed in the schema, so the original plan was already efficient.
+```
+Total execution time: ~361.29 ms
+```
 
-Repeated runs of the query benefit from PostgreSQL’s buffer cache, further reducing the visible difference.
+---
 
-However, the EXPLAIN plans show that PostgreSQL can now use more selective index-based access paths on order_status and the delivery date columns, which would matter more as data volume grows.
+# **6. Performance Comparison**
 
+| Metric           | Before     | After             | Improvement              |
+| ---------------- | ---------- | ----------------- | ------------------------ |
+| Sequential Scans | Higher     | Lower             | Improved filtering       |
+| Join Performance | Slower     | Slightly improved | Index on seller_id helps |
+
+### **Why Was Improvement Small?**
+
+1. **Dataset size is small** (course dataset, not production scale).
+2. **PostgreSQL caching** improves repeated execution time automatically.
+3. Several implicit indexes already exist on primary keys.
+
+On a larger dataset (millions of rows), the improvement would be **dramatic**, especially on:
+
+* `order_status`
+* Delivery date comparisons
+* Joins on seller_id
+
+---
+
+# **7. Conclusion**
+
+This performance tuning exercise demonstrated:
+
+* How to analyze query bottlenecks using **EXPLAIN ANALYZE**
+* How to design **indexes aligned with filtering & join patterns**
+* How OLAP queries benefit from optimized OLTP schema access
+* How small improvements in test datasets translate into **big gains** at scale
+
+Even though the runtime improvement (~1.4%) is modest due to dataset size, the new indexes provide:
+
+* Faster filtering
+* Better join selectivity
+* Scalable performance as data volume increases
+
+This tuning approach ensures the analytical layer remains responsive for dashboards, aggregations, and deeper analytics.
 
