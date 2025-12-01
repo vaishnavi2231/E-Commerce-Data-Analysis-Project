@@ -179,7 +179,7 @@ This performance tuning exercise demonstrated:
 * How OLAP queries benefit from optimized OLTP schema access
 * How small improvements in test datasets translate into **big gains** at scale
 
-Even though the runtime improvement (~1.4%) is modest due to dataset size, the new indexes provide:
+Even though the runtime improvement is modest due to dataset size, the new indexes provide:
 
 * Faster filtering
 * Better join selectivity
