@@ -4,13 +4,13 @@
 
 ## **1. Introduction**
 
-This report documents the performance profiling and optimization performed as part of **Phase 2: OLAP Analytical Layer**.
+This report documents the performance profiling and optimization performed that was part of **Phase 2: OLAP Analytical Layer**.
 Analytical queries often involve large scans, multiple joins, and heavy aggregations, making performance tuning essential for scalability and responsiveness.
 
-We selected the **Seller Performance Query** as the target for optimization because:
+We chose Seller Performance Query as our optimization target because:
 
 * It uses **four tables** (orders, order_items, order_reviews, sellers)
-* It includes **conditional filters**, **multiple join keys**, and **computational expressions**
+* It contains **conditional filters**, **multiple join keys**, and **computational expressions**
 * It runs over the **largest tables** in the OLTP schema
 * It represents a realistic business question used in marketplaces like Olist
 
@@ -61,10 +61,10 @@ ORDER BY total_revenue DESC;
 
 This query answers critical business questions:
 
-* Which sellers generate the highest revenue?
+* Which sellers bring in the most revenue?
 * Which sellers offer the best customer satisfaction?
-* Who delivers the fastest (lowest delay days)?
-* Who should be prioritized for marketplace ranking?
+* Who has the lowest delay days?
+* Marketplace ranking should be given to whom?
 
 ---
 
@@ -84,7 +84,7 @@ This query answers critical business questions:
   * `order_delivered_customer_date`
   * `order_estimated_delivery_date`
 * Seq Scan on **order_items** join on `seller_id`
-* Reviewing the plan shows:
+* A review of the plan shows:
 
   * No supporting indexes exist for major filter or join columns
   * Many rows scanned unnecessarily before filtering
@@ -156,16 +156,16 @@ Total execution time: ~361.29 ms
 | Sequential Scans | Higher     | Lower             | Improved filtering       |
 | Join Performance | Slower     | Slightly improved | Index on seller_id helps |
 
-### **Improvement was small because**
+### **Improvement was minute because**
 
 1. **Dataset size is small** (course dataset, not production scale).
 2. **PostgreSQL caching** improves repeated execution time automatically.
-3. Several implicit indexes already exist on primary keys.
+3.  Several implicit indexes are already on the primary keys.
 
-On a larger dataset (millions of rows), the improvement would be **dramatic**, especially on:
+On a larger dataset of millions of rows, this would be dramatic in terms of:
 
 * `order_status`
-* Delivery date comparisons
+* Comparisons of delivery dates
 * Joins on seller_id
 
 ---
