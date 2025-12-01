@@ -71,7 +71,7 @@ LIMIT 50;
    Business Question:
    - Which sellers drive the most revenue?
    - Which sellers have the best customer satisfaction?
-   - Which sellers deliver fastest (lowest average delay)?
+   - Which vendors deliver fastest (lowest average delay)?
 
    Metrics:
    - num_orders       : # of delivered orders per seller
@@ -80,7 +80,7 @@ LIMIT 50;
    - avg_delay_days   : avg(delivered_date - estimated_delivery_date)
 
    Techniques used:
-   - Multi-table joins (sellers, order_items, orders, order_reviews)
+   - Multi-table joins (sellers, order_items, orders and order_reviews)
    - Aggregations by seller
    - Window functions: RANK() for multi-dimensional ranking
    ============================================================ */
@@ -125,8 +125,8 @@ ORDER BY total_revenue DESC;
    Query 3: Monthly Revenue & Month-over-Month (MoM) Change
    ------------------------------------------------------------
    Business Question:
-   - How is monthly revenue trending over time?
-   - What is the month-over-month percentage growth/decline?
+   - Which direction is monthly revenue trending in?
+   - What is the month-over-month percent growth/decline?
 
    Metrics:
    - revenue              : monthly sum(price + freight_value)
@@ -136,7 +136,7 @@ ORDER BY total_revenue DESC;
    Techniques used:
    - DATE_TRUNC for monthly aggregation
    - Window function LAG() for previous-month comparison
-   - Derived percentage metric
+   - % metric derived
    ============================================================ */
 
 WITH monthly_rev AS (
