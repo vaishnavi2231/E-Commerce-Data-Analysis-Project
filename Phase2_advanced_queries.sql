@@ -6,7 +6,7 @@
               CTEs, window functions, and aggregations.
    ============================================================ */
 
--- To make sure we read from the correct schema
+-- To ensure that we read from the right schema
 SET search_path TO public;
 
 
@@ -16,10 +16,10 @@ SET search_path TO public;
    Business Question:
    - Who are our highest value customers?
    - How many orders have they placed?
-   - When did they first and most recently order?
+   - When was their first and last order placed?
 
    Techniques used:
-   - Multi-table join (orders + order_items)
+   - Join with multiple tables: orders + order_items
    - CTEs for reuse (customer_orders, ltv)
    - Aggregations: COUNT, SUM, AVG, MIN, MAX
    - Window function: NTILE(4) for LTV quartiles
