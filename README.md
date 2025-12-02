@@ -38,11 +38,4 @@ Project/
 10. performance_tuning_report.md # Before/after EXPLAIN ANALYZE results
 11. star_schema_report.md # Star schema explanation & grain definitions
 12. Phase2_star_schema.drawio.png # Star schema ERD image
-
 13. dbt/ # dbt data warehouse project
-     ── models/
-     │ ├── staging/ # staging layer (cleaned source tables)
-     │ ├── marts/
-     │ │ ├── dims/ # dimension models
-     │ │ ├── facts/ # fact models
-     ── dbt_project.yml
