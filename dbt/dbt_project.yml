@@ -2,13 +2,12 @@ name: 'olist_dwh'
 version: '1.0.0'
 config-version: 2
 
-# This must match the profile name in profiles.yml
 profile: 'olist_dwh'
 
-# Where your models live
+# Where the models live
 model-paths: ["models"]
 
-# (optional but nice) where tests, seeds, snapshots would live
+#  where tests, seeds, snapshots would live
 seed-paths: ["seeds"]
 test-paths: ["tests"]
 analysis-paths: ["analysis"]
@@ -31,3 +30,4 @@ models:
       facts:
         +schema: dw_olist
         +materialized: table
+
