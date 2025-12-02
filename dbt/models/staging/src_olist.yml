@@ -1,0 +1,11 @@
+sources:
+  - name: olist_oltp
+    schema: public
+    tables:
+      - name: customers
+      - name: sellers
+      - name: products
+      - name: orders
+      - name: order_items
+      - name: order_reviews
+      - name: product_category_translation
