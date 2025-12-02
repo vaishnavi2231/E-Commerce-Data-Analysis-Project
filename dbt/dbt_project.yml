@@ -20,7 +20,7 @@ models:
     +materialized: view      # default, can override in each model with config()
 
     staging:
-      +schema: dw_olist_stg  # optional: separate schema for staging views
+      +schema: dw_olist_stg  # separate schema for staging views
       +materialized: view
 
     marts:
@@ -30,4 +30,5 @@ models:
       facts:
         +schema: dw_olist
         +materialized: table
+
 
