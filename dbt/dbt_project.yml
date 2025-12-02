@@ -1,12 +1,33 @@
 name: 'olist_dwh'
 version: '1.0.0'
+config-version: 2
 
-# This setting configures which "profile" dbt uses for this project.
+# This must match the profile name in profiles.yml
 profile: 'olist_dwh'
 
-# Configuring models
+# Where your models live
+model-paths: ["models"]
+
+# (optional but nice) where tests, seeds, snapshots would live
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
 models:
   olist_dwh:
+    +schema: dw_olist        # all models go into schema dw_olist by default
+    +materialized: view      # default, can override in each model with config()
 
+    staging:
+      +schema: dw_olist_stg  # optional: separate schema for staging views
+      +materialized: view
 
-
+    marts:
+      dims:
+        +schema: dw_olist    # dimensions as tables or views
+        +materialized: table
+      facts:
+        +schema: dw_olist
+        +materialized: table
