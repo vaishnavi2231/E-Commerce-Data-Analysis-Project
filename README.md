@@ -18,7 +18,41 @@ https://drive.google.com/drive/folders/1KHfSVSZpr5Flyqs3hiq18OID4cTQtS8E?usp=dri
 
 Please place the downloaded CSV files into the `data/` folder before running the ingestion script.
 
+## 📘 Project Overview
+
+This project builds a complete **data engineering and analytics pipeline** using the  
+**Brazilian E-Commerce Public Dataset by Olist**.
+
+It includes:
+
+- A **normalized PostgreSQL OLTP database** (3NF)
+- A **Python ingestion pipeline** using Pandas + SQLAlchemy
+- An **analytics dashboard built with Streamlit**
+- Fully automated deployment using **Docker + Docker Compose**
+
+🟢 *The entire system runs with one command:*  
+```bash```
+docker-compose up --build
+
 ## Project Structure
+
+project/
+│
+├── database/
+│   ├── schema.sql               # PostgreSQL table creation
+│   ├── security.sql             # RBAC roles & permissions (optional)
+│
+├── dashboard/
+│   ├── app.py                   # Main Streamlit dashboard
+│   ├── ingest_data.py           # Python ingestion script
+│   ├── Dockerfile               # Builds dashboard container
+│   ├── requirement.txt          # Python dependencies
+│   ├── data/                    # CSVs used in ingestion
+│   └── pages/                   # Multi-page dashboard files
+│
+├── docker-compose.yml           # Orchestration for database + dashboard
+└── README.md                    # Documentation (this file)
+
 
 Project/
 1. Readme.md
@@ -39,3 +73,37 @@ Project/
 10. star_schema_report.md # Star schema explanation & grain definitions
 11. Phase2_star_schema.drawio.png # Star schema ERD image
 12. dbt/ # dbt data warehouse project
+
+## How to Run the Entire Project (Docker)
+
+1. Clone the Repository
+     git clone <your-repo-url>
+     cd project
+
+2. Start Docker Desktop
+     Ensure Docker is running on your system.
+
+3. Run Everything with One Command
+     docker-compose up --build
+   
+4. Open the Dashboard
+     http://localhost:8501
+
+This will:
+1. Start PostgreSQL
+2. Execute schema.sql and security.sql
+3. Build dashboard container
+4. Run ingest_data.py automatically
+5. Launch Streamlit dashboard
+
+
+
+## 📧 Contributors 
+
+1. Vaishnavi Gawale
+MS in Artificial Intelligence, University at Buffalo
+Email: vgawale@buffalo.edu
+
+2. Lalasa Mynalli
+MS in Artificial Intelligence, University at Buffalo
+Email: lalasamy@buffalo.edu
