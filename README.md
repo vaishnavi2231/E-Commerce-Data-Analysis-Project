@@ -36,36 +36,19 @@ docker-compose up --build
 
 ## Project Structure
 
-project/
-│
-├── database/
-│   ├── schema.sql               # PostgreSQL table creation
-│   ├── security.sql             # RBAC roles & permissions (optional)
-│
-├── dashboard/
-│   ├── app.py                   # Main Streamlit dashboard
-│   ├── ingest_data.py           # Python ingestion script
-│   ├── Dockerfile               # Builds dashboard container
-│   ├── requirement.txt          # Python dependencies
-│   ├── data/                    # CSVs used in ingestion
-│   └── pages/                   # Multi-page dashboard files
-│
-├── docker-compose.yml           # Orchestration for database + dashboard
-└── README.md                    # Documentation (this file)
-
-
 Project/
-1. Readme.md
-2. docker-compose.yml
-3. database/
-     - schema.sql
-     - security.sql
-4. scripts/
-     - ingest_data.py
-5. data
-     - README.md (Google drive link)
-6. ER_Diagram.pdf
-7. 3NF Justification Report
+     1. dashboard/ 
+          1.1. data/
+               - README.md (Google drive link)
+          1.2. pages/
+               - 02_Product_Details.py
+          1.3. app.py
+          1.4. Dockerfile
+          1.5. ingest_data.py
+     2. database/
+          - schema.sql
+          - security.sql
+     3. docker-compose.yml
 
 ### Phase 2
 8. Phase2_advanced_queries.sql # All advanced analytical queries
@@ -77,16 +60,19 @@ Project/
 ## How to Run the Entire Project (Docker)
 
 1. Clone the Repository
-     git clone <your-repo-url>
-     cd project
+     ```git clone <your-repo-url>```
+     ```cd project```
 
-2. Start Docker Desktop
+2. Copy the data(all csv files from Google drive link to below directory - 
+     ```/project/dashboard/data/```
+
+3. Start Docker Desktop
      Ensure Docker is running on your system.
 
-3. Run Everything with One Command
+4. Run Everything with One Command
      docker-compose up --build
    
-4. Open the Dashboard
+5. Open the Dashboard
      http://localhost:8501
 
 This will:
