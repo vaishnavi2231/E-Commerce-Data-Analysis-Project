@@ -39,7 +39,7 @@ docker-compose up --build
 Project/
 1. dashboard/
    1. data/
-      - README.md (Google drive link)
+     - README.md (Google drive link)
    2. pages/
      - 02_Product_Details.py
    3. app.py
