@@ -46,9 +46,9 @@ Project/
    4. Dockerfile
    5. ingest_data.py
 3. database/ 
-         - schema.sql
-         - security.sql
-4. docker-compose.yml
+      - schema.sql
+      - security.sql
+5. docker-compose.yml
  
 ### Phase 2
 8. Phase2_advanced_queries.sql # All advanced analytical queries
