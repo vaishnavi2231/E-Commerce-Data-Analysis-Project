@@ -66,13 +66,14 @@ Project/
 2. Copy the data(all csv files from Google drive link to below directory - 
      ```/project/dashboard/data/```
 
-3. Start Docker Desktop
-     Ensure Docker is running on your system.
+3. Ensure Docker is installed
+   - Start Docker Desktop
+   - Ensure Docker is running on your system.
 
-4. Run Everything with One Command
+5. Run Everything with One Command
      docker-compose up --build
    
-5. Open the Dashboard
+6. Open the Dashboard
      http://localhost:8501
 
 This will:
