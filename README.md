@@ -50,12 +50,12 @@ Project/
       - security.sql
 5. docker-compose.yml
  
-### Phase 2
-8. Phase2_advanced_queries.sql # All advanced analytical queries
-9. performance_tuning_report.md # Before/after EXPLAIN ANALYZE results
-10. star_schema_report.md # Star schema explanation & grain definitions
-11. Phase2_star_schema.drawio.png # Star schema ERD image
-12. dbt/ # dbt data warehouse project
+### Phase 2 - Advanced Querying & The Analytical Layer (OLAP)
+1. Phase2_advanced_queries.sql # All advanced analytical queries
+2. performance_tuning_report.md # Before/after EXPLAIN ANALYZE results
+3. star_schema_report.md # Star schema explanation & grain definitions
+4. Phase2_star_schema.drawio.png # Star schema ERD image
+5. dbt/ # dbt data warehouse project
 
 ## How to Run the Entire Project (Docker)
 
