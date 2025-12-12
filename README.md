@@ -37,19 +37,19 @@ docker-compose up --build
 ## Project Structure
 
 Project/
-     1. dashboard/ 
-          1.1. data/
-               - README.md (Google drive link)
-          1.2. pages/
-               - 02_Product_Details.py
-          1.3. app.py
-          1.4. Dockerfile
-          1.5. ingest_data.py
-     2. database/
-          - schema.sql
-          - security.sql
-     3. docker-compose.yml
-
+1. dashboard/
+   1. data/
+      - README.md (Google drive link)
+   2. pages/
+     - 02_Product_Details.py
+   3. app.py
+   4. Dockerfile
+   5. ingest_data.py
+3. database/
+      - schema.sql
+      - security.sql
+4. docker-compose.yml
+ 
 ### Phase 2
 8. Phase2_advanced_queries.sql # All advanced analytical queries
 9. performance_tuning_report.md # Before/after EXPLAIN ANALYZE results
