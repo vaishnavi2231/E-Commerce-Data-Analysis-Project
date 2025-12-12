@@ -71,7 +71,7 @@ Project/
    - Ensure Docker is running on your system.
 
 5. Run Everything with One Command
-     docker-compose up --build
+     ```docker-compose up --build```
    
 6. Open the Dashboard
      http://localhost:8501
@@ -94,3 +94,6 @@ Email: vgawale@buffalo.edu
 2. Lalasa Mynalli
 MS in Artificial Intelligence, University at Buffalo
 Email: lalasamy@buffalo.edu
+
+This is the first line.  
+This text will appear on a new line directly below.
