@@ -39,15 +39,15 @@ docker-compose up --build
 Project/
 1. dashboard/
    1. data/
-     - README.md (Google drive link)
+        - README.md (Google drive link)
    2. pages/
-     - 02_Product_Details.py
+        - 02_Product_Details.py
    3. app.py
    4. Dockerfile
    5. ingest_data.py
 3. database/
-      - schema.sql
-      - security.sql
+         - schema.sql
+         - security.sql
 4. docker-compose.yml
  
 ### Phase 2
