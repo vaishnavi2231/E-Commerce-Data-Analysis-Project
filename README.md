@@ -59,21 +59,21 @@ Project/
 
 ## How to Run the Entire Project (Docker)
 
-1. Clone the Repository
-     ```git clone <your-repo-url>```
+1. Clone the Repository <br>
+     ```git clone <your-repo-url>``` <br>
      ```cd project```
 
-2. Copy the data(all csv files from Google drive link to below directory - 
+2. Copy the data(all csv files from Google drive link to below directory - <br>
      ```/project/dashboard/data/```
 
 3. Ensure Docker is installed
    - Start Docker Desktop
    - Ensure Docker is running on your system.
 
-5. Run Everything with One Command
+5. Run Everything with One Command <br>
      ```docker-compose up --build```
    
-6. Open the Dashboard
+6. Open the Dashboard <br>
      http://localhost:8501
 
 This will:
@@ -95,5 +95,4 @@ Email: vgawale@buffalo.edu
 MS in Artificial Intelligence, University at Buffalo
 Email: lalasamy@buffalo.edu
 
-This is the first line.  
-This text will appear on a new line directly below.
+
