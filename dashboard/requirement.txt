@@ -1,0 +1,7 @@
+streamlit
+pandas
+altair
+sqlalchemy
+psycopg2-binary
+numpy
+streamlit-aggrid
