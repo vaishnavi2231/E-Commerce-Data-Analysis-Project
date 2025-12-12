@@ -45,7 +45,7 @@ Project/
    3. app.py
    4. Dockerfile
    5. ingest_data.py
-3. database/
+3. database/ 
          - schema.sql
          - security.sql
 4. docker-compose.yml
