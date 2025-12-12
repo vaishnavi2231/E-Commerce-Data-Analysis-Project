@@ -8,4 +8,4 @@ You can download the dataset from the following Google Drive link:
 👉 **Google Drive Dataset:**  
 https://drive.google.com/drive/folders/1KHfSVSZpr5Flyqs3hiq18OID4cTQtS8E?usp=drive_link
 
-Please place the downloaded CSV files into the `data/` folder before running the ingestion script.
+Please place the downloaded CSV files into the `data/` folder before running the project.
