@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 import altair as alt
+import os
 
 st.set_page_config(page_title="Product Category Details", layout="wide")
 
