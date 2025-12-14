@@ -1,16 +1,27 @@
 import pandas as pd
 from sqlalchemy import create_engine
-#from tqdm import tqdm
 import os
+import time
+from sqlalchemy.exc import OperationalError
 
 # -------------1. CONNECT TO POSTGRES DOCKER CONTAINER------------
 
-# engine = create_engine(
-#     "postgresql://postgres:admin@localhost:5433/olist_db"
-# )
-
 db_url = os.getenv("DATABASE_URL")
-engine = create_engine(db_url)
+
+def wait_for_db():
+    for i in range(30):  # wait up to ~30 seconds
+        try:
+            engine = create_engine(db_url)
+            with engine.connect():
+                print("Database is ready!")
+                return engine
+        except OperationalError:
+            print("Waiting for database...")
+            time.sleep(2)
+    raise Exception("Database not ready after waiting")
+
+engine = wait_for_db()
+
 
 # ------------LOAD A CSV--------
 def load_csv(path):
