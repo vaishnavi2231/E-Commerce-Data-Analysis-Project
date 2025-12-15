@@ -23,15 +23,12 @@ def get_engine():
 
 engine = get_engine()
 
-# --------------------------------------------------
-# HEADER
-# --------------------------------------------------
+
 st.title("Olist E-Commerce Analytics Dashboard")
 
 
-# --------------------------------------------------
+
 # KPI METRICS
-# --------------------------------------------------
 st.header("Key Performance Indicators")
 
 kpi_query = """
@@ -67,9 +64,8 @@ col4.metric("Total Revenue", "$" + human_format(float(kpi["total_revenue"][0])))
 col1, col2 = st.columns(2)
 
 with col1:
-    # --------------------------------------------------
+    
     # SALES OVER TIME (MONTHLY REVENUE)
-    # --------------------------------------------------
     st.header("Revenue Over Time")
 
     revenue_query = """
@@ -99,7 +95,6 @@ with col1:
 with col2:
     st.header("State-wise Sales Analysis")
 
-    # 1️⃣ State dropdown
     state_query = """
     SELECT DISTINCT customer_state 
     FROM customers
@@ -139,10 +134,8 @@ with col2:
 
     df_trend = pd.read_sql(trend_query, engine)
 
-    # Convert to datetime
     df_trend["month"] = pd.to_datetime(df_trend["month"])
 
-    # FEELS LIKE A REAL DASHBOARD – show line chart
     trend_chart = (
         alt.Chart(df_trend)
         .mark_line(point=True)
@@ -164,9 +157,9 @@ with col2:
 col3, col4 = st.columns(2)
 
 with col3:
-    # --------------------------------------------------
+
     # TOP 10 BEST-SELLING CATEGORIES (BAR CHART)
-    # --------------------------------------------------
+
     st.header("Top 10 Selling Product Categories")
 
     top_cat_query = """
@@ -191,7 +184,7 @@ with col3:
         .properties(height=400)
     )
     st.altair_chart(chart3, use_container_width=True)
-    #-------------------------
+
 
 with col4:
     from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
@@ -213,7 +206,7 @@ with col4:
     st.write("### Click a row to view product details:")
 
     gb = GridOptionsBuilder.from_dataframe(df_top)
-    gb.configure_selection("single", use_checkbox=False)  # allow row click
+    gb.configure_selection("single", use_checkbox=False) 
     gb.configure_grid_options(domLayout='normal')
 
     grid_options = gb.build()
@@ -225,11 +218,10 @@ with col4:
     update_mode=GridUpdateMode.SELECTION_CHANGED,
     allow_unsafe_jscode=True,)
 
-    # FIX: selected_rows is a DataFrame, not a list
     selected_rows = grid_response["selected_rows"]
 
     if selected_rows is not None and len(selected_rows) > 0:
-        selected = selected_rows.iloc[0]  # Use iloc instead of [0]
+        selected = selected_rows.iloc[0] 
         category = selected["product_category_name_english"]
 
         st.session_state["selected_category"] = category
