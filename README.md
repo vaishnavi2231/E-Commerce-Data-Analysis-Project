@@ -76,6 +76,10 @@ Project/
 6. Open the Dashboard <br>
      http://localhost:8501
 
+
+<img width="1503" height="846" alt="image" src="https://github.com/user-attachments/assets/5740a5a9-91dc-4726-9de0-2baabe1850d0" />
+
+
 This will:
 1. Start PostgreSQL
 2. Execute schema.sql and security.sql
